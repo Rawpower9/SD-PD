@@ -13,6 +13,7 @@ from pyannote.audio.utils.version import check_version
 import yaml
 import torch
 import numpy as np
+from dotenv import load_dotenv
 # from pyannote.database import FileFinder
 
 PIPELINE_PARAMS_NAME = "config.yaml"
@@ -149,6 +150,7 @@ visit https://hf.co/{model_id} to accept the user conditions."""
 
     return pipeline
 
+load_dotenv()
 AUDIO_FILE_NAME = "10second-gap"
 CENTROID_FILE_NAME = "jane_doe.txt"
 
@@ -161,7 +163,7 @@ def hook(step_name: str, step_artefact=None, file=None, completed=None, total=No
 
 pipeline = from_pretrained(
     checkpoint_path="pyannote/speaker-diarization-3.1",
-    use_auth_token="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",
+    use_auth_token=os.getenv("HF_TOKEN"),
 )
 
 pipeline.set_file_name(CENTROID_FILE_NAME)
